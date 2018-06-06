@@ -60,7 +60,7 @@ export default {
   resetQuestion () {
     this.state.answering.name = null
     this.state.timer.countdown = null
-    this.state.timer.disabled = false
+    this.state.timer.disabled = true
     this.state.timer.colour = '#FFCD6B'
   },
 
