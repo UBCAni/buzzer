@@ -12,32 +12,32 @@ defmodule ReachWeb.GameChannel do
   end
 
   def terminate(_reason, socket) do
-    if socket.assigns.team != nil && socket.assigns.team != nil do
-      broadcast!(socket, "disconnected", Reach.Game.remove_member(socket.assigns.team, socket.assigns.name))
+    if Map.has_key?(socket.assigns, :team) && Map.has_key?(socket.assigns, :name)  do
+      %{name: name, team: team} = socket.assigns
+
+      Reach.Game.remove_member(team, name)
+      broadcast!(socket, "disconnected", %{"team" => team, "name" => name})
     end
   end
 
-  def handle_in("new_team", %{"team" => team}, socket) do
-    broadcast!(socket, "new_team", Reach.Game.add_team(team))
-    {:noreply, socket}
-  end
-
-  def handle_in("player_joined", %{"team" => team, "name" => name}, socket) do
+  def handle_in("player_joined", %{"team" => team, "name" => name} = body, socket) do
     socket = assign(socket, :name, name) |> assign(:team, team)
+    Reach.Game.add_member(team, name)
+    broadcast!(socket, "player_joined", body)
 
-    broadcast!(socket, "player_joined", Reach.Game.add_member(team, name))
     {:noreply, socket}
   end
 
   def handle_in("team_scored", %{"team" => team, "points" => points}, socket) do
-    broadcast!(socket, "team_scored", Reach.Game.score_change(team, points))
+    new_score = Reach.Game.score_change(team, points)[team].score
+    broadcast!(socket, "team_scored", %{"team" => team, "points" => new_score})
     {:noreply, socket}
   end
 
-  def handle_in("freeze", %{"team" => team} = body, socket) do
-    if Reach.Game.block?(team) do
-      broadcast!(socket, "freeze", body)
-    end
+  def handle_in("freeze", %{"team" => team, "name" => name}, socket) do
+    # if Reach.Game.block?(team) do
+    broadcast!(socket, "freeze", %{"name" => name, "team" => team})
+    # end
 
     {:noreply, socket}
   end
@@ -48,12 +48,14 @@ defmodule ReachWeb.GameChannel do
   end
 
   def handle_in("reset:question", _, socket) do
-    broadcast!(socket, "reset:question", Reach.Game.unblock)
+    Reach.Game.unblock()
+    broadcast!(socket, "reset:question", %{})
     {:noreply, socket}
   end
 
   def handle_in("reset:game", _, socket) do
-    broadcast!(socket, "reset:game", Reach.Game.reset)
+    Reach.Game.reset()
+    broadcast!(socket, "reset:game", %{})
     {:noreply, socket}
   end
 end

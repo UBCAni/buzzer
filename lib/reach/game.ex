@@ -80,7 +80,7 @@ defmodule Reach.Game do
   @spec reset() :: t
   def reset() do
     Agent.get_and_update(__MODULE__, fn state ->
-      result = Enum.map(state, fn team -> %{team | score: 0, blocked: false} end)
+      result = Enum.map(state, fn {k, v} -> {k, %{v | :score => 0, :blocked => false}} end) |> Enum.into(%{})
       {result, result}
     end)
   end
@@ -91,7 +91,7 @@ defmodule Reach.Game do
   @spec unblock() :: t
   def unblock() do
     Agent.get_and_update(__MODULE__, fn state ->
-      result = Enum.map(state, fn team -> %{team | blocked: false} end)
+      result = Enum.map(state, fn {k, v} -> {k, %{v | :blocked => false}} end) |> Enum.into(%{})
       {result, result}
     end)
   end
@@ -101,16 +101,20 @@ defmodule Reach.Game do
   """
   @spec block?(String.t) :: boolean
   def block?(team) do
-    Agent.get_and_update(__MODULE__, fn state ->
-      case state[team] do
-        nil -> {false, state}
-        _ ->
-            if state[team].blocked do
-              {false, state}
-            else
-              {true, update_in(state[team].blocked, &(!/1))}
-            end
+    if team == nil do
+      true
+    else
+      Agent.get_and_update(__MODULE__, fn state ->
+        case state[team] do
+          nil -> {false, state}
+          _ ->
+              if state[team].blocked do
+                {false, state}
+              else
+                {true, update_in(state[team].blocked, &(!/1))}
+              end
+          end
+        end)
       end
-    end)
   end
 end

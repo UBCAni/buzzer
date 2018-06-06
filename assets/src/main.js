@@ -3,19 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { channel } from './socket'
+import { init } from './socket'
+import store from './store'
 
-channel.on('new_team', console.log)
-channel.on('player_joined', console.log)
-channel.on('team_scored', console.log)
-channel.on('freeze', console.log)
-channel.on('unfreeze', console.log)
-channel.on('reset:question', console.log)
-channel.on('reset:game', console.log)
-channel.on('state', (data) => {
+init((data) => {
   /* eslint-disable no-new */
   Vue.config.productionTip = false
-  console.log(data)
+  store.init(data)
 
   new Vue({
     el: '#app',
@@ -27,5 +21,3 @@ channel.on('state', (data) => {
     }
   })
 })
-
-channel.join()

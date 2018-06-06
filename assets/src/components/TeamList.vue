@@ -1,8 +1,7 @@
 <template>
     <div>
-      <h2>{{ name }}</h2>
-      <div>{{ score }}</div>
-      <ul>
+      <h3 class="col s12">{{ name }}: {{ score }}</h3>
+      <ul class="col s12">
         <li v-for="player in players" :key="player">
           {{ player }}
         </li>

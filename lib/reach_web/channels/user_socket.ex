@@ -33,5 +33,5 @@ defmodule ReachWeb.UserSocket do
   #     ReachWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(socket), do: nil
+  def id(_socket), do: nil
 end
