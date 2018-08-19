@@ -43,7 +43,7 @@ export default {
     if (answering === this.state.user.name) {
       this.state.timer.colour = '#7962C9'
       if (navigator.vibrate) {
-        navigator.vibrate(300)
+        navigator.vibrate(500)
       }
     } else {
       this.state.timer.colour = '#FFCD6B'

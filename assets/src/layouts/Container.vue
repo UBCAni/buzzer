@@ -1,6 +1,6 @@
 <template>
     <div class="container center-align">
-        <div class="row">
+        <div v-if="show" class="row">
             <h1>UBCAni Reach</h1>
         </div>
         <slot></slot>
@@ -9,6 +9,13 @@
 
 <script>
 export default {
-  name: 'Container'
+  name: 'Container',
+  props: {
+    show: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
 }
 </script>

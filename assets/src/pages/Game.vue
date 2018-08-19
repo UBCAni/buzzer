@@ -7,7 +7,6 @@
                     <svg>
                         <circle cx="50%" cy="50%" r="125" :stroke="timer.colour" stroke-width="16" fill="none" />
                     </svg>
-                    <timer class="timer"/>
                 </div>
             </div>
         </div>
@@ -23,7 +22,6 @@
 import Container from '@/layouts/Container'
 import store from '@/store'
 import { freeze } from '@/socket'
-import Timer from '@/components/Timer'
 import TeamList from '@/components/TeamList'
 import Answering from '@/components/Answering'
 
@@ -45,7 +43,6 @@ export default {
 
   components: {
     container: Container,
-    timer: Timer,
     team: TeamList,
     answering: Answering
   },

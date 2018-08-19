@@ -1,11 +1,12 @@
 <template>
-    <container>
+    <container :show=true>
+        <div v-if="this.error" class="red-text">{{ error }}</div>
         <div class="row">
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="user" type="text" v-model="user.name" />
-                        <label for="user">Username (required)</label>
+                        <label class="active" for="user">Username (required)</label>
                     </div>
                 </div>
                 <div class="row">
@@ -38,7 +39,8 @@ export default {
   data () {
     return {
       user: store.state.user,
-      game: store.state.game
+      game: store.state.game,
+      error: ''
     }
   },
 
@@ -48,9 +50,13 @@ export default {
 
   methods: {
     addToGame () {
-      this.user.visitedLobby = true
-      addPlayer(this.user.team, this.user.name)
-      this.$router.replace('game')
+      if (Object.values(this.game).some((team) => team.players.includes(this.user.name))) {
+        this.error = 'This name is already in use.'
+      } else {
+        this.user.visitedLobby = true
+        addPlayer(this.user.team, this.user.name)
+        this.$router.replace('game')
+      }
     }
   },
 

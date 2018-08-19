@@ -1,9 +1,9 @@
 <template>
-    <countdown v-if="timer.countdown !== null" tag="p" :time="10000" :interval="100" :leading-zero="false" :auto-start="false" ref="countdown">
-        <template slot-scope="props">
-            <span class="seconds">{{ props.seconds }}</span>
-        </template>
-    </countdown>
+  <countdown v-if="timer.countdown !== null" tag="p" :time="10000" :interval="1000" :leading-zero="false" :auto-start="false" ref="countdown">
+      <template slot-scope="props">
+          <span class="seconds">{{ props.seconds }}</span>
+      </template>
+  </countdown>
 </template>
 
 <script>

@@ -11,7 +11,7 @@ config :reach, ReachWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/.bin/webpack-dev-server", "--inline", "--progress", "--config", "build/webpack.dev.conf.js",
+  watchers: [node: ["node_modules/.bin/webpack-dev-server", "--inline", "--progress", "--open", "--watch", "--config", "build/webpack.dev.conf.js",
                     cd: Path.expand("../assets", __DIR__)]]
 
 # ## SSL Support
