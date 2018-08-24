@@ -48,3 +48,7 @@ export function resetQuestion () {
 export function resetGame () {
   return channel.push('reset:game')
 }
+
+export function removePlayer (team, name) {
+  return channel.push('player_removed', { team, name })
+}

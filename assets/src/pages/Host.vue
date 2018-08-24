@@ -12,8 +12,8 @@
         <a @click="resetGame" class="waves-effect waves-light btn">Next Game</a>
       </div>
         <div class="row">
-            <team class="col s6" v-bind="game.shiani"></team>
-            <team class="col s6" v-bind="game.tano"></team>
+            <team :admin="true" class="col s6" v-bind="game.shiani"></team>
+            <team :admin="true" class="col s6" v-bind="game.tano"></team>
         </div>
     </container>
 </template>

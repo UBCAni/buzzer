@@ -28,6 +28,11 @@ defmodule ReachWeb.GameChannel do
     {:noreply, socket}
   end
 
+  def handle_in("player_removed", %{"team" => team, "name" => name}, socket) do
+    Reach.Game.remove_member(team, name)
+    broadcast!(socket, "disconnected", %{"team" => team, "name" => name})
+  end
+
   def handle_in("team_scored", %{"team" => team, "points" => points}, socket) do
     new_score = Reach.Game.score_change(team, points)[team].score
     broadcast!(socket, "team_scored", %{"team" => team, "points" => new_score})

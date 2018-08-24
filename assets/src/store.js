@@ -30,6 +30,11 @@ export default {
     const players = this.state.game[team].players
 
     players.splice(players.indexOf(player), 1)
+
+    console.log(this.state.user.name)
+    if (player === this.state.user.name) {
+      window.location = '/'
+    }
   },
 
   adjustScore (team, score) {
