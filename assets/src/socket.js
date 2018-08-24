@@ -13,7 +13,7 @@ export function init (func) {
   channel.on('disconnected', ({ team, name }) => store.removePlayer(team, name))
   channel.on('player_joined', ({ team, name }) => store.addPlayer(team, name))
   channel.on('team_scored', ({ team, points }) => store.adjustScore(team, points))
-  channel.on('freeze', ({ name }) => store.freeze(name))
+  channel.on('freeze', ({ team, name }) => store.freeze(team, name))
   channel.on('unfreeze', () => store.unfreeze())
   channel.on('reset:question', () => store.resetQuestion())
   channel.on('reset:game', () => store.resetGame())

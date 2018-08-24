@@ -36,10 +36,10 @@ export default {
     this.state.game[team].score = score
   },
 
-  freeze (answering) {
+  freeze (team, answering) {
     this.state.timer.disabled = true
     this.state.timer.countdown = false
-    this.state.answering.name = answering
+    this.state.answering.name = `[${team}] ${answering}`
     if (answering === this.state.user.name) {
       this.state.timer.colour = '#7962C9'
       if (navigator.vibrate) {
