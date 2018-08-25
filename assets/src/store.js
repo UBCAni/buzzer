@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default {
   state: {
     timer: {
@@ -19,26 +21,36 @@ export default {
   },
 
   init (game) {
-    this.state.game = game
+    this.state.game.teams = game
   },
 
   addPlayer (team, player) {
-    this.state.game[team].players.push(player)
+    this.state.game.teams[team].players.push(player)
   },
 
   removePlayer (team, player) {
-    const players = this.state.game[team].players
+    const players = this.state.game.teams[team].players
 
     players.splice(players.indexOf(player), 1)
 
-    console.log(this.state.user.name)
     if (player === this.state.user.name) {
       window.location = '/'
     }
   },
 
+  addTeam (team) {
+    Vue.set(this.state.game.teams, team, { name: team, players: [], score: 0 })
+  },
+
+  removeTeam (team) {
+    Vue.delete(this.state.game.teams, team)
+    if (this.state.user.team === team) {
+      window.location = '/'
+    }
+  },
+
   adjustScore (team, score) {
-    this.state.game[team].score = score
+    this.state.game.teams[team].score = score
   },
 
   freeze (team, answering) {

@@ -12,9 +12,8 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <select v-model="user.team">
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="shiani">Shiani ({{ game['shiani'].players.length }})</option>
-                            <option value="tano">Tano ({{ game['tano'].players.length }})</option>
+                            <option value="" disabled selected>Choose your team</option>
+                            <option v-for="(team, key) in game.teams" :key="key" :value="key">{{key}} ({{ team.players.length }})</option>
                         </select>
                         <label>Team</label>
                     </div>
@@ -50,7 +49,7 @@ export default {
 
   methods: {
     addToGame () {
-      if (Object.values(this.game).some((team) => team.players.includes(this.user.name))) {
+      if (Object.values(this.game.teams).some((team) => team.players.includes(this.user.name))) {
         this.error = 'This name is already in use.'
       } else {
         this.user.visitedLobby = true

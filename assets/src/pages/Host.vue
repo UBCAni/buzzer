@@ -6,15 +6,25 @@
       <answering />
       <div class="row">
         <a @click="unfreeze" class="waves-effect waves-light btn">Unfreeze Timer</a>
-        <a @click="() => giveScore('shiani', 1)" class="waves-effect waves-light btn">+1 Shiani</a>
-        <a @click="() => giveScore('tano', 1)" class="waves-effect waves-light btn">+1 Tano</a>
         <a @click="resetQuestion" class="waves-effect waves-light btn">Next Question</a>
         <a @click="resetGame" class="waves-effect waves-light btn">Next Game</a>
       </div>
-        <div class="row">
-            <team :admin="true" class="col s6" v-bind="game.shiani"></team>
-            <team :admin="true" class="col s6" v-bind="game.tano"></team>
+      <div v-for="(team, key) in game.teams" :key="key">
+        <team  :admin="true" v-bind="team"></team>
+        <a @click="() => giveScore(key, 1)" class="waves-effect waves-light btn">+1</a>
+        <a @click="() => giveScore(key, -1)" class="waves-effect waves-light btn">-1</a>
+        <a @click="() => removeTeam(key)" class="waves-effect waves-light btn red">Delete</a>
+      </div>
+      <form action="#" class="row">
+        <div class="file-field input-field col s6">
+          <div class="waves-effect waves-light btn" @click="addTeam" :disabled="team === '' || game.teams[team]">
+            <span>Add</span>
+          </div>
+          <div class="file-path-wrapper">
+            <input id="team" type="text" v-model="team" />
+          </div>
         </div>
+      </form>
     </container>
 </template>
 
@@ -32,7 +42,8 @@ export default {
   data () {
     return {
       game: store.state.game,
-      timer: store.state.timer
+      timer: store.state.timer,
+      team: ''
     }
   },
   components: {
@@ -57,6 +68,17 @@ export default {
 
     giveScore (team, points) {
       socket.changeScore(team, points)
+    },
+
+    addTeam () {
+      socket.addTeam(this.team)
+      this.team = ''
+    },
+
+    removeTeam (team) {
+      if (confirm('Remove this team?')) {
+        socket.removeTeam(team)
+      }
     }
   }
 }

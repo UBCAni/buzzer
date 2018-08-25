@@ -20,22 +20,36 @@ defmodule ReachWeb.GameChannel do
     end
   end
 
-  def handle_in("player_joined", %{"team" => team, "name" => name} = body, socket) do
+  def handle_in("add:team", %{"team" => team} = body, socket) do
+    result = Reach.Game.add_team(team)
+
+    broadcast!(socket, "add:team", body)
+    {:noreply, socket}
+  end
+
+  def handle_in("remove:team", %{"team" => team}, socket) do
+    Reach.Game.remove_team(team)
+
+    broadcast!(socket, "remove:team", %{"team" => team})
+    {:noreply, socket}
+  end
+
+  def handle_in("add:player", %{"team" => team, "name" => name} = body, socket) do
     socket = assign(socket, :name, name) |> assign(:team, team)
     Reach.Game.add_member(team, name)
-    broadcast!(socket, "player_joined", body)
+    broadcast!(socket, "add:player", body)
 
     {:noreply, socket}
   end
 
-  def handle_in("player_removed", %{"team" => team, "name" => name}, socket) do
+  def handle_in("remove:player", %{"team" => team, "name" => name}, socket) do
     Reach.Game.remove_member(team, name)
     broadcast!(socket, "disconnected", %{"team" => team, "name" => name})
   end
 
-  def handle_in("team_scored", %{"team" => team, "points" => points}, socket) do
+  def handle_in("change:score", %{"team" => team, "points" => points}, socket) do
     new_score = Reach.Game.score_change(team, points)[team].score
-    broadcast!(socket, "team_scored", %{"team" => team, "points" => new_score})
+    broadcast!(socket, "change:score", %{"team" => team, "points" => new_score})
     {:noreply, socket}
   end
 

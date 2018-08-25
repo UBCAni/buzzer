@@ -11,8 +11,10 @@ export const channel = socket.channel('game:default')
 
 export function init (func) {
   channel.on('disconnected', ({ team, name }) => store.removePlayer(team, name))
-  channel.on('player_joined', ({ team, name }) => store.addPlayer(team, name))
-  channel.on('team_scored', ({ team, points }) => store.adjustScore(team, points))
+  channel.on('add:team', ({ team }) => store.addTeam(team))
+  channel.on('remove:team', ({ team }) => store.removeTeam(team))
+  channel.on('add:player', ({ team, name }) => store.addPlayer(team, name))
+  channel.on('change:score', ({ team, points }) => store.adjustScore(team, points))
   channel.on('freeze', ({ team, name }) => store.freeze(team, name))
   channel.on('unfreeze', () => store.unfreeze())
   channel.on('reset:question', () => store.resetQuestion())
@@ -26,11 +28,11 @@ export function addPlayer (team, name) {
   localStorage.setItem('team', team)
   localStorage.setItem('name', name)
 
-  return channel.push('player_joined', { team, name })
+  return channel.push('add:player', { team, name })
 }
 
 export function changeScore (team, points) {
-  return channel.push('team_scored', { team, points })
+  return channel.push('change:score', { team, points })
 }
 
 export function freeze (team, name) {
@@ -50,5 +52,13 @@ export function resetGame () {
 }
 
 export function removePlayer (team, name) {
-  return channel.push('player_removed', { team, name })
+  return channel.push('remove:player', { team, name })
+}
+
+export function addTeam (team) {
+  return channel.push('add:team', { team })
+}
+
+export function removeTeam (team) {
+  return channel.push('remove:team', { team })
 }

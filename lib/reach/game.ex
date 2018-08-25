@@ -30,6 +30,18 @@ defmodule Reach.Game do
   end
 
   @doc """
+  Remove a team from the game.
+  """
+  @spec remove_team(String.t) :: t
+  def remove_team(name) do
+    Agent.get_and_update(__MODULE__, fn state ->
+      result = Map.delete(state, name)
+
+      {result, result}
+    end)
+  end
+
+  @doc """
   Add a new member to a team.
   """
   @spec add_member(String.t, String.t) :: t | none

@@ -11,10 +11,7 @@
             </div>
         </div>
         <answering />
-        <div class="row">
-            <team class="col s6" v-bind="game.shiani"></team>
-            <team class="col s6" v-bind="game.tano"></team>
-        </div>
+        <team v-for="(team, key) in game.teams" :key="key" :admin="true" v-bind="team"></team>
     </container>
 </template>
 
