@@ -82,7 +82,7 @@ export default {
   },
 
   resetGame () {
-    for (const value of Object.values(this.state.game)) {
+    for (const value of Object.values(this.state.game.teams)) {
       value.score = 0
     }
 
