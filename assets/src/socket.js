@@ -25,9 +25,6 @@ export function init (func) {
 }
 
 export function addPlayer (team, name) {
-  localStorage.setItem('team', team)
-  localStorage.setItem('name', name)
-
   return channel.push('add:player', { team, name })
 }
 

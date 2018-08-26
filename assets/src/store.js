@@ -12,10 +12,7 @@ export default {
       name: null
     },
 
-    user: {
-      team: localStorage.getItem('team') || '',
-      name: localStorage.getItem('name') || ''
-    },
+    user: { team: '', name: '' },
 
     game: {}
   },

@@ -3,15 +3,15 @@
         <div class="row">
             <div class="row">Hello, {{ user.name }}!</div>
             <div class="row">
-                <div class="buzzer" @click="buzz">
+                <div class="buzzer">
                     <svg>
-                        <circle cx="50%" cy="50%" r="125" :stroke="timer.colour" stroke-width="16" fill="none" />
+                        <circle @click="buzz" cx="50%" cy="50%" r="125" :stroke="timer.colour" stroke-width="16" fill="white" />
                     </svg>
                 </div>
             </div>
         </div>
         <answering />
-        <team v-for="(team, key) in game.teams" :key="key" :admin="true" v-bind="team"></team>
+        <team v-for="(team, key) in game.teams" :key="key" v-bind="team"></team>
     </container>
 </template>
 

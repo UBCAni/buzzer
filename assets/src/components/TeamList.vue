@@ -4,9 +4,7 @@
         <div class="collapsible-header">[{{ name }}] | Score: {{ score }} | Players: {{ players.length }}</div>
         <div class="collapsible-body">
           <li v-for="player in players" :key="player" @click="remove">
-            <div @click="() => remove(name, player)">
-              {{ player }}
-            </div>
+            <span>{{ player }} <i v-if="admin" @click="() => remove(name, player)" style="cursor: pointer;" class="tiny material-icons red-text">close</i></span>
           </li>
         </div>
       </li>

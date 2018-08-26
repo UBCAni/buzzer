@@ -1,10 +1,5 @@
 <template>
-    <div class="row" v-if="answering.name !== null">Now answering: {{ answering.name }}. Time remaining:
-      <countdown :time="5000" :leading-zero="false" :interval="1000">
-          <template slot-scope="props">
-              <span>{{ props.seconds }}</span>
-          </template>
-      </countdown>
+    <div class="row" v-if="answering.name !== null">Now answering: {{ answering.name }}.
     </div>
 </template>
 

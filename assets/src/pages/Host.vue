@@ -5,18 +5,18 @@
       </div>
       <answering />
       <div class="row">
-        <a @click="unfreeze" class="waves-effect waves-light btn">Unfreeze Timer</a>
-        <a @click="resetQuestion" class="waves-effect waves-light btn">Next Question</a>
-        <a @click="resetGame" class="waves-effect waves-light btn">Next Game</a>
+        <a @click="unfreeze" class="waves-effect waves-light btn">Unfreeze</a>
+        <a @click="resetQuestion" class="waves-effect waves-light btn">Reset Timer</a>
+        <a @click="resetGame" class="waves-effect waves-light btn">Reset Game</a>
       </div>
       <div v-for="(team, key) in game.teams" :key="key">
-        <team  :admin="true" v-bind="team"></team>
+        <team :admin="true" v-bind="team"></team>
         <a @click="() => giveScore(key, 1)" class="waves-effect waves-light btn">+1</a>
         <a @click="() => giveScore(key, -1)" class="waves-effect waves-light btn">-1</a>
         <a @click="() => removeTeam(key)" class="waves-effect waves-light btn red">Delete</a>
       </div>
       <form action="#" class="row">
-        <div class="file-field input-field col s6">
+        <div class="file-field input-field">
           <div class="waves-effect waves-light btn" @click="addTeam" :disabled="team === '' || game.teams[team]">
             <span>Add</span>
           </div>
@@ -63,7 +63,9 @@ export default {
     },
 
     resetGame () {
-      socket.resetGame()
+      if (confirm('Reset score?')) {
+        socket.resetGame()
+      }
     },
 
     giveScore (team, points) {

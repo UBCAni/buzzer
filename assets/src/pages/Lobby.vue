@@ -6,14 +6,14 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="user" type="text" v-model="user.name" />
-                        <label class="active" for="user">Username (required)</label>
+                        <label class="{ active: user.name }" for="user">Username (required)</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <select v-model="user.team">
                             <option value="" disabled selected>Choose your team</option>
-                            <option v-for="(team, key) in game.teams" :key="key" :value="key">{{key}} ({{ team.players.length }})</option>
+                            <option v-for="(team, key) in game.teams" :key="key" :value="key">{{key}} ({{ team.players.length }} players)</option>
                         </select>
                         <label>Team</label>
                     </div>
