@@ -21,7 +21,7 @@ defmodule ReachWeb.GameChannel do
   end
 
   def handle_in("add:team", %{"team" => team} = body, socket) do
-    result = Reach.Game.add_team(team)
+    Reach.Game.add_team(team)
 
     broadcast!(socket, "add:team", body)
     {:noreply, socket}
@@ -56,9 +56,9 @@ defmodule ReachWeb.GameChannel do
   end
 
   def handle_in("freeze", %{"team" => team, "name" => name}, socket) do
-    # if Reach.Game.block?(team) do
-    broadcast!(socket, "freeze", %{"name" => name, "team" => team})
-    # end
+    if Reach.Game.block?(team) do
+      broadcast!(socket, "freeze", %{"name" => name, "team" => team})
+    end
 
     {:noreply, socket}
   end

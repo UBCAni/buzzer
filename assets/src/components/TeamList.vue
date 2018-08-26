@@ -1,7 +1,7 @@
 <template>
     <ul class="col s12 collapsible">
       <li :class="{ active: user.team === name }">
-        <div class="collapsible-header">[{{ name }}] | Score: {{ score }} | Players: {{ players.length }}</div>
+        <div class="collapsible-header">[{{ name }}] | Score: {{ score }} | Players: {{ players.length }} |<div v-if="buzzed" class="red-text">&nbsp;Buzzed</div></div>
         <div class="collapsible-body">
           <li v-for="player in players" :key="player" @click="remove">
             <span>{{ player }} <i v-if="admin" @click="() => remove(name, player)" style="cursor: pointer;" class="tiny material-icons red-text">close</i></span>
@@ -24,10 +24,18 @@ export default {
     }
   },
 
-  props: ['name', 'score', 'players', 'admin'],
+  props: {
+    name: String,
+    score: Number,
+    players: Array,
+    admin: Boolean,
+    buzzed: Boolean
+  },
+
   mounted () {
     M.Collapsible.init(document.querySelectorAll('.collapsible'), { accordian: false })
   },
+
   methods: {
     remove (team, name) {
       if (this.admin) {

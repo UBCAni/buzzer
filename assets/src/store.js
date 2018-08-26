@@ -36,7 +36,7 @@ export default {
   },
 
   addTeam (team) {
-    Vue.set(this.state.game.teams, team, { name: team, players: [], score: 0 })
+    Vue.set(this.state.game.teams, team, { name: team, players: [], score: 0, buzzed: false })
   },
 
   removeTeam (team) {
@@ -54,6 +54,8 @@ export default {
     this.state.timer.disabled = true
     this.state.timer.countdown = false
     this.state.answering.name = `[${team}] ${answering}`
+    this.state.game.teams[team].buzzed = true
+
     if (answering === this.state.user.name) {
       this.state.timer.colour = '#7962C9'
       if (navigator.vibrate) {
@@ -76,6 +78,10 @@ export default {
     this.state.timer.countdown = null
     this.state.timer.disabled = true
     this.state.timer.colour = '#FFCD6B'
+
+    for (const value of Object.values(this.state.game.teams)) {
+      value.buzzed = false
+    }
   },
 
   resetGame () {

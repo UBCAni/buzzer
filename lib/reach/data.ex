@@ -1,15 +1,15 @@
 defmodule Reach.Team do
-  @type t :: %Reach.Team{players: MapSet.t(String.t), name: String.t, score: non_neg_integer, blocked: boolean}
+  @type t :: %Reach.Team{players: MapSet.t(String.t), name: String.t, score: non_neg_integer, buzzed: boolean}
 
-  @enforce_keys [:players, :name, :score, :blocked]
-  defstruct [:players, :name, :score, :blocked]
+  @enforce_keys [:players, :name, :score, :buzzed]
+  defstruct [:players, :name, :score, :buzzed]
 
   @doc """
   Instantiates a new Team with default values.
   """
   @spec new(String.t) :: t
   def new(name) do
-    %Reach.Team{players: MapSet.new, name: name, score: 0, blocked: false}
+    %Reach.Team{players: MapSet.new, name: name, score: 0, buzzed: false}
   end
 
   @doc """
