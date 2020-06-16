@@ -2,7 +2,7 @@ import * as Phoenix from 'phoenix'
 import store from './store'
 
 const socket = new Phoenix.Socket(process.env.NODE_ENV === 'production'
-  ? 'wss://buzzer.ubcani.com/socket'
+  ? 'wss://buzzer.moso.moe/socket'
   : 'ws://localhost:4000/socket')
 
 socket.connect()

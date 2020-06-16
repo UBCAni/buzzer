@@ -16,7 +16,7 @@ use Mix.Config
 config :reach, ReachWeb.Endpoint,
   load_from_system_env: true,
   http: [port: {:system, "PORT"}],
-  url: [host: "buzzer.ubcani.com", port: {:system, "PORT"}],
+  url: [host: "buzzer.moso.moe", port: {:system, "PORT"}],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: ".",
